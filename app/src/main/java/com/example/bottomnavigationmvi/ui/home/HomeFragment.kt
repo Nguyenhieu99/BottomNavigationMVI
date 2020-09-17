@@ -1,45 +1,49 @@
 package com.example.bottomnavigationmvi.ui.home
 
+import aacmvi.AacMviFragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.fragment.app.viewModels
 import com.example.bottomnavigationmvi.R
-import kotlinx.android.synthetic.main.fragment_home.*
 
-class HomeFragment : Fragment() {
+class HomeFragment :
+    AacMviFragment<HomeFragmentViewState, HomeFragmentViewEffect, HomeFragmentViewEvent, HomeFragmentVM>() {
 
-    private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel::class.java)
+
         val root = inflater.inflate(R.layout.fragment_home, container, false)
-
-        val textView: TextView = root.findViewById(R.id.text_home)
-
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
 
         val button_test = root.findViewById<Button>(R.id.bt_test)
 
         button_test.setOnClickListener {
 
-            Toast.makeText(this.context, "Click to Button TEST", Toast.LENGTH_SHORT).show()
-            homeViewModel.countNumber()
+//            Toast.makeText(this.context, "Click to Button TEST", Toast.LENGTH_SHORT).show()
         }
 
         return root
+    }
+
+    override val viewModel: HomeFragmentVM by viewModels()
+
+    override fun renderViewState(viewState: HomeFragmentViewState) {
+        when(viewState.status) {
+            HomeFragmentViewStatus.Start -> {
+                Toast.makeText(this.context, "Start Application", Toast.LENGTH_SHORT).show()
+            }
+        }
+//        TODO("Not yet implemented")
+    }
+
+    override fun renderViewEffect(viewEffect: HomeFragmentViewEffect) {
+//        TODO("Not yet implemented")
     }
 }
