@@ -12,3 +12,6 @@
 /captures
 .externalNativeBuild
 .cxx
+.idea/gradle.xml
+.idea/vcs.xml
+app/src/main/java/com/example/bottomnavigationmvi/ui/home/HomeFragmentSM.kt
